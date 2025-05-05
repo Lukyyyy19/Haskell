@@ -63,5 +63,45 @@ factoresDe x n
 -- }
 -- Aclaración: 'a' < 'b' es True. 
 
---palabraOrdenada :: [Char]->Bool
+palabraOrdenada :: [Char]->Bool
+palabraOrdenada xs = estaOrdenada (eliminarBlancos xs)
 
+estaOrdenada :: [Char] -> Bool
+estaOrdenada (x:[y]) = x<=y
+estaOrdenada (x:y:xs)
+    | x<=y = estaOrdenada (y:xs)
+    |otherwise = False
+
+eliminarBlancos :: [Char] -> [Char]
+eliminarBlancos [] = []
+eliminarBlancos (x:xs)
+    | x /= ' ' = x:eliminarBlancos xs
+    |otherwise = eliminarBlancos xs
+
+
+-- EJERCICIO 4 (3 puntos)
+-- problema similAnagrama (palabra1: seq⟨Char⟩, palabra2: seq⟨Char⟩) : Bool⟩{
+--   requiere: {True}
+--   asegura: {res = true <=> (para todo caracter no blanco, la cantidad de apariciones de ese caracter en palabra1 es igual a la cantidad de apariciones en palabra2, 
+-- y además existe al menos un caracter en palabra1 que tiene una posición distinta en palabra2)}
+-- }
+
+similAnagrama :: String -> String -> Bool
+similAnagrama xs ys 
+    | longitud xs /= longitud ys = False
+    | otherwise=anagramaLetra xs xs ys
+
+
+anagramaLetra :: [Char]-> [Char] -> [Char] -> Bool
+anagramaLetra [] xs ys = True
+anagramaLetra _ [x] [y] = x == y
+anagramaLetra (k:ks) (xs) (ys) 
+    | cuantasVecesSeRepite k (xs) == cuantasVecesSeRepite k (ys) = anagramaLetra ks xs ys
+    | otherwise = False
+
+cuantasVecesSeRepite :: Char -> String -> Int
+cuantasVecesSeRepite _ [] = 0
+cuantasVecesSeRepite c (x:xs)
+    | c == x = 1 + cuantasVecesSeRepite c xsSinBlancos
+    | otherwise = cuantasVecesSeRepite c xsSinBlancos
+    where xsSinBlancos = eliminarBlancos xs
