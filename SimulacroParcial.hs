@@ -73,14 +73,14 @@ compararLetras  (c:v:cs) f m
 codificarFrase :: [Char] -> [(Char,Char)] -> [Char]
 codificarFrase [] _ = []
 codificarFrase(x:xs) m 
-    | esValidoParaTodaLetra (x:xs) m = intercambiar x m : codificarFrase (eliminarBlancos xs) m 
+    | esValidoParaTodaLetra (x:xs) m = intercambiar x m : codificarFrase xs m 
     | otherwise = (x:xs)
 
 
 esValidoParaTodaLetra :: Frase -> Mapeo -> Bool
 esValidoParaTodaLetra [x] m = hayQueCodificar x m
 esValidoParaTodaLetra (x:xs) m 
-    | hayQueCodificar x m = esValidoParaTodaLetra (eliminarBlancos xs) m
+    | hayQueCodificar x m = esValidoParaTodaLetra xs m
     | otherwise = False
 
 intercambiar :: Char -> Mapeo -> Char

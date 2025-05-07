@@ -88,8 +88,10 @@ eliminarBlancos (x:xs)
 
 similAnagrama :: String -> String -> Bool
 similAnagrama xs ys 
-    | longitud xs /= longitud ys = False
+    | longitud xsSinBlancos /= longitud ysSinBlancos = False
     | otherwise=anagramaLetra xs xs ys
+    where xsSinBlancos = eliminarBlancos xs
+          ysSinBlancos = eliminarBlancos ys
 
 
 anagramaLetra :: [Char]-> [Char] -> [Char] -> Bool
